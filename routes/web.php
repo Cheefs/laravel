@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\IndexController;
-use App\Http\Controllers\NewsController;
+use App\Http\Controllers\IndexController as HomeController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\NewsCategoryController;
+use App\Http\Controllers\News\CategoryController;
+use App\Http\Controllers\News\IndexController as NewsIndexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,21 +16,21 @@ use App\Http\Controllers\NewsCategoryController;
 |
 */
 
-Route::get('/', [IndexController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::name('news')->prefix('news')->group(function () {
-    Route::get('/', [NewsController::class, 'index']);
+    Route::get('/', [NewsIndexController::class, 'index']);
 
     Route::name('.')->group(function () {
-        Route::get('/{id}', [NewsController::class, 'view'])
+        Route::get('/{id}', [NewsIndexController::class, 'view'])
             ->name('view')
             ->where('id', '[0-9]+');
 
         Route::name('category')->prefix('category')->group(function () {
-            Route::get('/', [NewsCategoryController::class, 'index']);
+            Route::get('/', [CategoryController::class, 'index']);
 
             Route::name('.')->group(function () {
-                Route::get('{slug}', [NewsCategoryController::class, 'view'])->name('view');
+                Route::get('{slug}', [CategoryController::class, 'view'])->name('view');
             });
         });
     });
