@@ -3,9 +3,9 @@
 <h1><?= $category['title'] ?></h1>
 
 <?php if (count($news)): ?>
-    <?php foreach ( $news as $k => $v ): ?>
+    <?php foreach ( $news as $item ): ?>
         <div>
-            <a href="<?= route('news.view', $k) ?>"><?= $v['title'] ?></a>
+            <a href="<?= route('news.view', $item['id']) ?>"><?= $item['title'] ?></a>
         </div>
     <?php endforeach; ?>
 <?php else: ?>

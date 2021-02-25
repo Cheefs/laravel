@@ -18,20 +18,14 @@ use App\Http\Controllers\News\IndexController as NewsIndexController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::name('news')->prefix('news')->group(function () {
+Route::name('news')->prefix('/news')->group(function () {
     Route::get('/', [NewsIndexController::class, 'index']);
+    Route::get('/{id}', [NewsIndexController::class, 'view'])
+        ->name('.view')
+        ->where('id', '[0-9]+');
+});
 
-    Route::name('.')->group(function () {
-        Route::get('/{id}', [NewsIndexController::class, 'view'])
-            ->name('view')
-            ->where('id', '[0-9]+');
-
-        Route::name('category')->prefix('category')->group(function () {
-            Route::get('/', [CategoryController::class, 'index']);
-
-            Route::name('.')->group(function () {
-                Route::get('{slug}', [CategoryController::class, 'view'])->name('view');
-            });
-        });
-    });
+Route::name('news.category')->prefix('/news/category')->group(function () {
+    Route::get('/', [CategoryController::class, 'index']);
+    Route::get('/{slug}', [CategoryController::class, 'view'])->name('.view');
 });
