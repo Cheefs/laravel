@@ -29,3 +29,12 @@ Route::name('news.category')->prefix('/news/category')->group(function () {
     Route::get('/', [CategoryController::class, 'index']);
     Route::get('/{slug}', [CategoryController::class, 'view'])->name('.view');
 });
+
+Route::name('admin.')
+    ->prefix('admin')
+    ->group(function () {
+        Route::get('/', [IndexController::class, 'index'])->name('index');
+        Route::get('/test1', [IndexController::class, 'test1'])->name('test1');
+        Route::get('/test2', [IndexController::class, 'test2'])->name('test2');
+    });
+
