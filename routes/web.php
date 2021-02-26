@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\IndexController as HomeController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\News\CategoryController;
 use App\Http\Controllers\News\IndexController as NewsIndexController;
@@ -39,3 +40,7 @@ Route::name('admin.')
         Route::get('/test2', [AdminIndexController::class, 'test2'])->name('test2');
     });
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
