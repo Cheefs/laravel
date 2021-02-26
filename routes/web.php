@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\IndexController as HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\News\CategoryController;
@@ -33,8 +34,8 @@ Route::name('news.category')->prefix('/news/category')->group(function () {
 Route::name('admin.')
     ->prefix('admin')
     ->group(function () {
-        Route::get('/', [IndexController::class, 'index'])->name('index');
-        Route::get('/test1', [IndexController::class, 'test1'])->name('test1');
-        Route::get('/test2', [IndexController::class, 'test2'])->name('test2');
+        Route::get('/', [AdminIndexController::class, 'index'])->name('index');
+        Route::get('/test1', [AdminIndexController::class, 'test1'])->name('test1');
+        Route::get('/test2', [AdminIndexController::class, 'test2'])->name('test2');
     });
 
