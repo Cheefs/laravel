@@ -20,11 +20,12 @@ use App\Http\Controllers\News\IndexController as NewsIndexController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::name('news')->prefix('/news')->group(function () {
-    Route::get('/', [NewsIndexController::class, 'index']);
+Route::name('news.')->prefix('/news')->group(function () {
+    Route::get('/', [NewsIndexController::class, 'index'])->name('index');
     Route::get('/{id}', [NewsIndexController::class, 'view'])
-        ->name('.view')
+        ->name('view')
         ->where('id', '[0-9]+');
+    Route::get('/create', [NewsIndexController::class, 'create'])->name('create');
 });
 
 Route::name('news.category')->prefix('/news/category')->group(function () {
