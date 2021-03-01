@@ -42,7 +42,7 @@ class News
         return $this->list;
     }
 
-    public function findOne(int $id): ?array {
+    #[Pure] public function findOne(int $id): ?array {
         return $this->findAll()[$id] ?? [];
     }
 

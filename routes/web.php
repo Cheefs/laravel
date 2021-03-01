@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\IndexController as HomeController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\News\CategoryController;
 use App\Http\Controllers\News\IndexController as NewsIndexController;
@@ -19,11 +20,12 @@ use App\Http\Controllers\News\IndexController as NewsIndexController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::name('news')->prefix('/news')->group(function () {
-    Route::get('/', [NewsIndexController::class, 'index']);
+Route::name('news.')->prefix('/news')->group(function () {
+    Route::get('/', [NewsIndexController::class, 'index'])->name('index');
     Route::get('/{id}', [NewsIndexController::class, 'view'])
-        ->name('.view')
+        ->name('view')
         ->where('id', '[0-9]+');
+    Route::get('/create', [NewsIndexController::class, 'create'])->name('create');
 });
 
 Route::name('news.category')->prefix('/news/category')->group(function () {
@@ -39,3 +41,7 @@ Route::name('admin.')
         Route::get('/test2', [AdminIndexController::class, 'test2'])->name('test2');
     });
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
