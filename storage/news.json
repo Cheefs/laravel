@@ -1,0 +1,50 @@
+{
+    "1": {
+        "title": "Sport news",
+        "category_id": 1,
+        "text": "asdasdadasd",
+        "is_private": false,
+        "id": 1
+    },
+    "2": {
+        "title": "Sport news",
+        "category_id": 1,
+        "text": "asdasdadasd",
+        "is_private": false,
+        "id": 2
+    },
+    "3": {
+        "title": "Nature news",
+        "category_id": 2,
+        "text": "asdasdadasd",
+        "is_private": true,
+        "id": 3
+    },
+    "4": {
+        "title": "test",
+        "category_id": 1,
+        "text": "123",
+        "is_private": false,
+        "id": 4
+    },
+    "5": {
+        "title": "123",
+        "category_id": 1,
+        "text": "123",
+        "id": 5
+    },
+    "6": {
+        "title": "New News",
+        "category_id": 3,
+        "text": "science",
+        "is_private": true,
+        "id": 6
+    },
+    "7": {
+        "title": "New News 2",
+        "category_id": 3,
+        "text": "another science",
+        "is_private": false,
+        "id": 7
+    }
+}

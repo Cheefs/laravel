@@ -11,7 +11,7 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
                 @foreach($links as $link )
-                    <li class="nav-item {{ Route::current()->getName() === $link['route'] ? "active" : ''  }}">
+                    <li class="nav-item {{ request()->routeIs($link['route']) ? "active" : ''  }}">
                         <a class="nav-link" href="{{ route($link['route'], $link['routeParams'] ?? []) }}">
                             {{ $link['name'] }}
                         </a>

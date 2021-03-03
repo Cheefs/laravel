@@ -1,13 +1,7 @@
 @extends('layouts.app')
 
 @section('menu')
-    @include(
-        'main-menu', [
-            'current' => [
-                'route' => 'news.create',
-                'name' => __('Create News'),
-            ]
-        ])
+    @include('admin.menu')
 @endsection
 
 @section('content')
@@ -16,7 +10,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
-                      <form method="POST" action="{{ route('news.create') }}">
+                      <form method="POST" action="{{ route('admin.news.create') }}">
                         @csrf
                         <div class="form-group">
                             <label for="title">{{ __('Title') }}</label>
@@ -45,7 +39,12 @@
                                 required
                             >
                                 @foreach($categoryList as $category)
-                                    <option value="{{ $category['id'] }}">{{ __($category['title']) }}</option>
+                                    <option
+                                        @if( old('category_id') === (int)$category['id']) selected @endif
+                                        value="{{ $category['id'] }}"
+                                    >
+                                        {{ $category['title'] }}
+                                    </option>
                                 @endforeach
                             </select>
                             @error('category_id')
@@ -63,7 +62,7 @@
                                 class="form-control @error('Text') is-invalid @enderror"
                                 name="text"
                                 required
-                            ></textarea>
+                            >{{ old('text') }}</textarea>
                             @error('Text')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -72,9 +71,14 @@
                         </div>
 
                         <div class="form-check">
-                            <input id="isPrivate" name="isPrivate" type="checkbox" value="1"
-                                   class="form-check-input">
-                            <label for="isPrivate" >{{ __('Is Private') }}</label>
+                            <input id="is_private"
+                               @if( old('is_private') ) checked @endif
+                               name="is_private"
+                               type="checkbox"
+                               value="1"
+                               class="form-check-input"
+                            >
+                            <label for="is_private" >{{ __('Is Private') }}</label>
                         </div>
 
                         <div class="form-group">
