@@ -44,6 +44,9 @@ class NewsCategory
 
     public function findBy(string $key, string|int $value): ?array {
         return Arr::first($this->findAll(), function ($item) use ($key, $value) {
+            if (!isset($item[$key])) {
+                return false;
+            }
             return $item[ $key ] === $value;
         });
     }

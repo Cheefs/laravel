@@ -25,7 +25,8 @@ Route::name('news.')->prefix('/news')->group(function () {
     Route::get('/{id}', [NewsIndexController::class, 'view'])
         ->name('view')
         ->where('id', '[0-9]+');
-    Route::get('/create', [NewsIndexController::class, 'create'])->name('create');
+
+    Route::match(['get', 'post'], '/download', [NewsIndexController::class, 'download'])->name('download');
 });
 
 Route::name('news.category')->prefix('/news/category')->group(function () {
@@ -40,7 +41,7 @@ Route::name('admin.')
         Route::get('/test1', [AdminIndexController::class, 'test1'])->name('test1');
         Route::get('/test2', [AdminIndexController::class, 'test2'])->name('test2');
 
-        Route::get('/news/create', [AdminIndexController::class, 'create'])->name('admin.news.create');
+        Route::match(['get', 'post'], '/news/create', [AdminIndexController::class, 'createNews'])->name('news.create');
     });
 
 Auth::routes();
