@@ -34,16 +34,18 @@ services:
       - app-network
 
   db:
-    image: postgres:latest
+    image: mysql:8.0
     container_name: db
     restart: unless-stopped
-    tty: true
     ports:
-      - "5432:5432"
+      - "3306:3306"
     environment:
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_DB: ${DB_NAME}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
     networks:
       - app-network
 
@@ -51,8 +53,3 @@ services:
 networks:
   app-network:
     driver: bridge
-
-#Volumes
-volumes:
-  dbdata:
-    driver: local
