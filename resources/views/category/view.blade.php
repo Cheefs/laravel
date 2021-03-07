@@ -1,14 +1,7 @@
 @extends('layouts.app')
 
 @section('menu')
-    @include(
-        'main-menu', [
-            'current' => isset($category) ? [
-                'route' => 'news.category.view',
-                'routeParams' => $category['id'],
-                'name' => __($category['title']),
-            ] : null
-    ])
+    @include('main-menu')
 @endsection
 
 @section('content')

@@ -31,6 +31,7 @@
         "title": "123",
         "category_id": 1,
         "text": "123",
+        "is_private": true,
         "id": 5
     },
     "6": {
