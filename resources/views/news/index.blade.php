@@ -9,9 +9,10 @@
     <ul class="list-group">
         @forelse( $list as $news )
             <li class="list-group-item">
-            <h4>{{ $news['title'] }}</h4>
-                @if(!$news['is_private'])
-                    <a href="{{ route('news.view', $news['id']) }}">
+            <h4>{{ $news->title }}</h4>
+            <div class="card-img" style="background-image: url({{ $news->image ?? asset('storage/default.jpg') }})"></div>
+                @if(!$news->is_private)
+                    <a href="{{ route('news.view', $news->id) }}">
                         {{ __("Details...") }}
                     </a>
                 @endif

@@ -25,10 +25,10 @@
                                 >
                                     @foreach($categoryList as $category)
                                         <option
-                                            @if( old('category_id') === (int)$category['id']) selected @endif
-                                        value="{{ $category['id'] }}"
+                                            @if( old('category_id') === $category->id) selected @endif
+                                        value="{{ $category->id }}"
                                         >
-                                            {{ $category['title'] }}
+                                            {{ $category->title }}
                                         </option>
                                     @endforeach
                                 </select>

@@ -10,7 +10,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
-                      <form method="POST" action="{{ route('admin.news.create') }}">
+                      <form method="POST" action="{{ route('admin.news.create') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="title">{{ __('Title') }}</label>
@@ -40,10 +40,10 @@
                             >
                                 @foreach($categoryList as $category)
                                     <option
-                                        @if( old('category_id') === (int)$category['id']) selected @endif
-                                        value="{{ $category['id'] }}"
+                                        @if( old('category_id') === $category->id) selected @endif
+                                        value="{{ $category->id }}"
                                     >
-                                        {{ $category['title'] }}
+                                        {{ $category->title }}
                                     </option>
                                 @endforeach
                             </select>
@@ -79,6 +79,10 @@
                                class="form-check-input"
                             >
                             <label for="is_private" >{{ __('Is Private') }}</label>
+                        </div>
+
+                        <div class="form-group">
+                          <input type="file" name="image">
                         </div>
 
                         <div class="form-group">
