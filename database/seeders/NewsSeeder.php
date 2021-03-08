@@ -23,12 +23,13 @@ class NewsSeeder extends Seeder
 
         $categoryList = DB::table('news_category')->get();
 
-        for($i = 0; $i <= 10; $i++) {
+        for($i = 0; $i < 10; $i++) {
+            $randomCategory = $categoryList[ rand(0, count($categoryList) - 1) ];
             $data[] = [
                 'title' => $faker->word(),
                 'text' => $faker->realText(rand(200,700)),
                 'is_private' => false,
-                'category_id' => rand(1, count($categoryList)),
+                'category_id' => $randomCategory->id,
                 'image' => null
             ];
         }
