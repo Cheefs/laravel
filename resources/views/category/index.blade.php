@@ -9,8 +9,8 @@
     <ul class="list-group">
     @forelse( $list as $category )
         <li class="list-group-item">
-            <a href="{{ route('news.category.view', $category['slug']) }}">
-                {{ $category['title'] }}
+            <a href="{{ route('news.category.view', $category->slug) }}">
+                {{ $category->title }}
             </a>
         </li>
     @empty

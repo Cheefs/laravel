@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\News\CategoryController;
 use App\Http\Controllers\News\IndexController as NewsIndexController;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +42,7 @@ Route::name('admin.')
         Route::get('/test1', [AdminIndexController::class, 'test1'])->name('test1');
         Route::get('/test2', [AdminIndexController::class, 'test2'])->name('test2');
 
-        Route::match(['get', 'post'], '/news/create', [AdminIndexController::class, 'createNews'])->name('news.create');
+        Route::match(['get', 'post'], '/news/create', [AdminNewsController::class, 'create'])->name('news.create');
     });
 
 Auth::routes();

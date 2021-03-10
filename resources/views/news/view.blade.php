@@ -9,11 +9,12 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">{{ $news['title'] }}</div>
+                    <div class="card-header">{{ $news->title }}</div>
                     <div class="card-body">
                         @if($news)
-                            @if (!$news['is_private'])
-                                <p>{{ $news['text'] }}</p>
+                            @if (!$news->is_private)
+                                <div class="card-img" style="background-image: url({{ $news->image ?? asset('storage/default.jpg') }})"></div>
+                                <p>{{ $news->text }}</p>
                             @else
                                 <span class="text-danger">{{ __('Register to look') }}</span>
                             @endif

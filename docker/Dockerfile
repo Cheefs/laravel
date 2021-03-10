@@ -3,9 +3,8 @@ FROM php:8.0-fpm
 RUN apt-get update && \
     apt-get install -y --no-install-recommends libssl-dev zlib1g-dev curl git unzip netcat libxml2-dev libpq-dev libzip-dev libpng-dev && \
     pecl install apcu xdebug && \
-    docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
-    docker-php-ext-install -j$(nproc) zip opcache intl pdo_pgsql pgsql gd && \
-    docker-php-ext-enable apcu pdo_pgsql sodium xdebug && \
+    docker-php-ext-install mysqli pdo pdo_mysql tokenizer xml pcntl zip opcache intl gd && \
+    docker-php-ext-enable apcu pdo_mysql sodium xdebug && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 WORKDIR /var/www
@@ -24,3 +23,5 @@ USER www
 
 EXPOSE 9000
 CMD ["php-fpm"]
+
+RUN composer install
