@@ -10,48 +10,38 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
-                      <form method="POST" action="{{ route('admin.news.create') }}" enctype="multipart/form-data">
+                      <form method="POST" action="{{ route('admin.news.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="title">{{ __('Title') }}</label>
                             <input
                                id="title"
                                type="text"
-                               class="form-control @error('title') is-invalid @enderror"
+                               class="form-control"
                                name="title"
                                value="{{ old('title') }}"
                                required
                                autofocus
                             >
-                            @error('title')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
                         </div>
 
                         <div class="form-group">
-                            <label for="category_id">{{ __('Category') }}</label>
+                            <label for="news_category_id">{{ __('Category') }}</label>
                             <select
-                                id="category_id"
-                                class="form-control @error('category_id') is-invalid @enderror"
-                                name="category_id"
+                                id="news_category_id"
+                                class="form-control"
+                                name="news_category_id"
                                 required
                             >
                                 @foreach($categoryList as $category)
                                     <option
-                                        @if( old('category_id') === $category->id) selected @endif
+                                        @if( old('news_category_id') === $category->id) selected @endif
                                         value="{{ $category->id }}"
                                     >
                                         {{ $category->title }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('category_id')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
                         </div>
 
                         <div class="form-group">
@@ -59,15 +49,10 @@
                             <textarea
                                 id="Text"
                                 type="text"
-                                class="form-control @error('Text') is-invalid @enderror"
+                                class="form-control"
                                 name="text"
                                 required
                             >{{ old('text') }}</textarea>
-                            @error('Text')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
                         </div>
 
                         <div class="form-check">

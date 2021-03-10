@@ -6,33 +6,89 @@ use App\Http\Controllers\Controller;
 use App\Models\News;
 use App\Models\NewsCategory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+
 use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
-    public function create(Request $request, NewsCategory $category, News $news) {
-        $categoryList = DB::table('news_category')->get();
-        if ($request->isMethod('post')) {
+    /**
+     * Display a listing of the resource.
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function index() {
+        return view('admin.news.index' )->with('news', News::paginate(10));
+    }
 
-            $request->flash();
-            $imageUrl = null;
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function create(News $news) {
+        return view('admin.news.create', [
+            'news' => $news,
+            'categoryList' => NewsCategory::all()
+        ]);
+    }
 
-            if ($request->file('image')) {
-                $path = Storage::putFile('public', $request->file('image'));
-                $imageUrl = Storage::url($path);
-            }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request) {
+        $news = new News();
+        $news->fill($request->all());
+        $news->image = $this->saveImage($request);
+        $news->save();
+        return redirect()->route('news.view', $news->id )->with('success', 'News created!');
+    }
 
-            $id = DB::table('news')->insertGetId([
-                'title' => $request->get('title'),
-                'is_private' => (bool)$request->get('is_private'),
-                'text' => $request->get('text'),
-                'category_id' => $request->get('category_id'),
-                'image' => $imageUrl
-            ]);
 
-            return redirect()->route('news.view', ['id' => $id ] );
+    /**
+     * Show the form for editing the specified resource.
+     * @param News $news
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function edit(News $news) {
+        return view('admin.news.update', [
+            'news' => $news,
+            'categoryList' => NewsCategory::all()
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     * @param Request $request
+     * @param News $news
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(News $news, Request $request) {
+        $news->fill($request->all());
+        $news->image = $this->saveImage($request);
+        $news->save();
+        return redirect()->route('news.view', $news->id )->with('success', 'News updated!');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @param News $news
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function destroy(News $news) {
+        $news->delete();
+        return redirect()->route('admin.news.index' )->with('success', 'News deleted!');
+    }
+
+    protected function saveImage(Request $request, string $fileName = 'image'): ?string {
+        $imageUrl = null;
+        $file = $request->file($fileName);
+        if ($file) {
+            $path = Storage::putFile('public', $file);
+            $imageUrl = Storage::url($path);
         }
-        return view('admin.news-create')->with('categoryList', $categoryList);
+        return $imageUrl;
     }
 }

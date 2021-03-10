@@ -7,37 +7,38 @@ use App\Models\News;
 use App\Models\NewsCategory;
 use App\Models\NewsExport;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
 
 class IndexController extends Controller
 {
     public function index(): View {
-        $news = DB::table('news')->get();
-        return view('news.index')->with('list', $news);
+        return view('news.index')->with('news', News::paginate(10));
     }
 
-    public function view(int $id) {
-        $item = DB::table('news')->find($id);
-
-        if (!$item) {
-            return Redirect::to('news');
-        }
-
-        return view('news.view')->with('news', $item);
+    public function view(News $news) {
+        return view('news.view')->with('news', $news);
     }
 
-    public function download(Request $request, NewsCategory $category) {
-        $categoryList = DB::table('news_category')->get();
+    public function download(Request $request) {
+        $categoryList = NewsCategory::all();
 
         if ($request->isMethod('post')) {
             $request->flash();
-            $selectedCategory = DB::table('news_category')->find($request->get('category_id'));
+
+            $selectedCategory = null;
+            foreach ($categoryList as $category) {
+                if ($category->id === (int)$request->get('news_category_id')) {
+                    $selectedCategory = $category;
+                }
+            }
+
+            if (!$selectedCategory) {
+                return redirect()->route('news.download');
+            }
 
             return Excel::download(
-                new NewsExport($category->getNews($selectedCategory->id)), "{$selectedCategory->slug}.xlsx"
+                new NewsExport($selectedCategory->news), "{$selectedCategory->slug}.xlsx"
             );
         }
         return view('news.download')->with('categoryList', $categoryList);

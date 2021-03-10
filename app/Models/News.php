@@ -3,62 +3,33 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\File;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use PhpOffice\PhpSpreadsheet\Calculation\Category;
 
 /**
- * @property array $list
+ * @property string $id
+ * @property string $title
+ * @property string $image
+ * @property string $text
+ * @property bool $is_private
+ * @property int $news_category_id;
+ * @property Category $category
+ *
  **/
-class News
+class News extends Model
 {
-    const FILE_NAME = '/news.json';
-    protected int $lastInsertId = 1;
+    use HasFactory;
 
-    public function getLastInsertId(): int {
-        return $this->lastInsertId;
-    }
-    /** @todo найти как замокать функцию в тестах */
-    public function findAll(): array {
-        $filePath = $this->getFilePath();
+    protected $fillable = ['title', 'text', 'is_private', 'news_category_id'];
 
-        if (File::exists($filePath)) {
-            return json_decode(File::get( $filePath ), true);
-        }
-        return [];
+    public function fill(array $attributes): News {
+        parent::fill($attributes);
+        $this->is_private = isset($attributes['is_private']);
+        return $this;
     }
 
-    public function findOne(int $id): ?array {
-        return $this->findAll()[$id] ?? [];
-    }
-
-    public function findBy(string $key, int $value): array {
-        return Arr::where($this->findAll(), function ($item) use ($key, $value) {
-            if (!isset($item[$key])) {
-                return false;
-            }
-            return $item[ $key ] === $value;
-        });
-    }
-
-    private function getFilePath(): string {
-        return storage_path() . self::FILE_NAME;
-    }
-
-    /** @todo найти как замокать функцию в тестах */
-    public function save(array $data) {
-        $newsData = $this->findAll();
-        $data['category_id'] = (int)$data['category_id'];
-        $data['is_private'] = isset($data['is_private']);
-        $data['id'] = count($newsData) + 1;
-        $newsData[ $data['id'] ] = $data;
-
-        $isSaved = File::put($this->getFilePath(), json_encode($newsData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) );
-
-        if (!$isSaved) {
-            throw new FileException();
-        }
-
-        $this->lastInsertId = $data['id'];
+    public function category() {
+        return $this->belongsTo(NewsCategory::class);
     }
 }

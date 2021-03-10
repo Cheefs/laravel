@@ -16,12 +16,12 @@ class CreateNewsTable extends Migration
             $table->id();
             $table->string('title')->comment('Заголовок');
             $table->text('text')->comment("Текст новости");
-            $table->unsignedBigInteger('category_id')->comment("ID категории");
+            $table->unsignedBigInteger('news_category_id')->comment("ID категории");
             $table->boolean('is_private')->default(false)->comment("Новость приватна");
             $table->string('image')->nullable(true)->comment("Фото новости");
             $table->timestamps();
 
-            $table->foreign('category_id')->references('id')->on('news_category');
+            $table->foreign('news_category_id')->references('id')->on('news_categories');
         });
     }
 
@@ -32,7 +32,7 @@ class CreateNewsTable extends Migration
      */
     public function down() {
         Schema::table('news', function(Blueprint $table) {
-            $table->dropForeign(['category_id']);
+            $table->dropForeign(['news_category_id']);
         });
 
         Schema::dropIfExists('news');

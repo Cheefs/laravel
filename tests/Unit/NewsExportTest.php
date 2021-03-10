@@ -22,7 +22,7 @@ class NewsExportTest extends TestCase
         $this->assertEquals(
             [
                 "title",
-                "category_id",
+                "news_category_id",
                 "text",
                 "id"
             ],

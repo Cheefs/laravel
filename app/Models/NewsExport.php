@@ -3,26 +3,26 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class NewsExport implements FromArray, WithHeadings
 {
-    protected array $news;
+    protected Collection $news;
 
-    public function __construct(array $news) {
+    public function __construct( Collection $news) {
         $this->news = $news;
     }
 
     public function array(): array {
-        return $this->news;
+        return $this->news->toArray();
     }
 
-    public function headings(): array
-    {
+    public function headings(): array {
         return [
             "title",
-            "category_id",
+            "news_category_id",
             "text",
             "id",
         ];
