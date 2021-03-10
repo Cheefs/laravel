@@ -66,7 +66,10 @@ class NewsController extends Controller
      */
     public function update(News $news, Request $request) {
         $news->fill($request->all());
-        $news->image = $this->saveImage($request);
+        $newImage = $this->saveImage($request);
+        if ($newImage) {
+            $news->image = $newImage;
+        }
         $news->save();
         return redirect()->route('news.view', $news->id )->with('success', 'News updated!');
     }
