@@ -16,16 +16,16 @@
                         <form method="POST" action="{{ route('news.download') }}">
                             @csrf
                             <div class="form-group">
-                                <label for="category_id">{{ __('Category') }}</label>
+                                <label for="news_category_id">{{ __('Category') }}</label>
                                 <select
-                                    id="category_id"
-                                    class="form-control @error('category_id') is-invalid @enderror"
-                                    name="category_id"
+                                    id="news_category_id"
+                                    class="form-control"
+                                    name="news_category_id"
                                     required
                                 >
                                     @foreach($categoryList as $category)
                                         <option
-                                            @if( old('category_id') === $category->id) selected @endif
+                                            @if( old('news_category_id') === $category->id) selected @endif
                                         value="{{ $category->id }}"
                                         >
                                             {{ $category->title }}

@@ -4,30 +4,25 @@ namespace App\Http\Controllers\News;
 
 use App\Http\Controllers\Controller;
 use App\Models\NewsCategory;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
     public function index(): View {
-        $categoryList = DB::table('news_category')->get();
-        return view('category.index')->with('list', $categoryList);
+        return view('category.index')->with('newsCategories', NewsCategory::paginate(10));
     }
 
-    public function view(NewsCategory $model, string $slug)
-    {
-        $category = DB::table('news_category')->where('slug', $slug)->first();
+    public function view(string $slug) {
+        $category = NewsCategory::where('slug', $slug)->first();
 
         if (!$category) {
-           return Redirect::to('news/category');
+           return redirect()->route('news.category.index');
         }
-
-        $categoryNews = DB::table('news')->where('category_id', $category->id)->get();
 
         return view('category.view', [
             'category' => $category,
-            'news' => $categoryNews,
+            'news' => $category->news,
         ]);
     }
 }

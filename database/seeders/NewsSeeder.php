@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\NewsCategory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker;
@@ -21,7 +22,7 @@ class NewsSeeder extends Seeder
         $data = [];
         $faker = Faker\Factory::create('ru_RU');
 
-        $categoryList = DB::table('news_category')->get();
+        $categoryList = NewsCategory::all();
 
         for($i = 0; $i < 10; $i++) {
             $randomCategory = $categoryList[ rand(0, count($categoryList) - 1) ];
@@ -29,7 +30,7 @@ class NewsSeeder extends Seeder
                 'title' => $faker->word(),
                 'text' => $faker->realText(rand(200,700)),
                 'is_private' => false,
-                'category_id' => $randomCategory->id,
+                'news_category_id' => $randomCategory->id,
                 'image' => null
             ];
         }

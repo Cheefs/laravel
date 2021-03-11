@@ -23,5 +23,3 @@ USER www
 
 EXPOSE 9000
 CMD ["php-fpm"]
-
-RUN composer install
