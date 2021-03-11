@@ -17,7 +17,7 @@ class CategoryController extends Controller
         $category = NewsCategory::where('slug', $slug)->first();
 
         if (!$category) {
-           return Redirect::to('news/category');
+           return redirect()->route('news.category.index');
         }
 
         return view('category.view', [

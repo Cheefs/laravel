@@ -26,7 +26,6 @@ Route::name('news.')->prefix('/news')->group(function () {
     Route::get('/category/{slug}', [CategoryController::class, 'view'])->name('category.view');
 
     Route::get('/', [NewsIndexController::class, 'index'])->name('index');
-    Route::match(['get', 'post'], '/download', [NewsIndexController::class, 'download'])->name('download');
     Route::get('/{news}', [NewsIndexController::class, 'view'])
         ->name('view')
         ->where('id', '[0-9]+');
