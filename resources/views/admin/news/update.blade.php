@@ -18,18 +18,22 @@
                                 <input
                                     id="title"
                                     type="text"
-                                    class="form-control"
+                                    class="form-control @error('title') is-invalid @enderror"
                                     name="title"
                                     value="{{ $news->title }}"
-                                    autofocus
                                 >
+                                @error('title')
+                                <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="news_category_id">{{ __('Category') }}</label>
                                 <select
                                     id="news_category_id"
-                                    class="form-control"
+                                    class="form-control @error('news_category_id') is-invalid @enderror"
                                     name="news_category_id"
                                 >
                                 @foreach($categoryList as $category)
@@ -40,6 +44,11 @@
                                     </option>
                                     @endforeach
                                 </select>
+                                @error('news_category_id')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="form-group">
@@ -47,9 +56,14 @@
                                     <textarea
                                     id="Text"
                                     type="text"
-                                    class="form-control"
+                                    class="form-control @error('text') is-invalid @enderror"
                                     name="text"
                                 >{{ $news->text }}</textarea>
+                                @error('text')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="form-check">
@@ -64,7 +78,12 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="file" name="image">
+                                <input type="file" name="image" class="@error('image') is-invalid @enderror">
+                                @error('image')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="form-group">

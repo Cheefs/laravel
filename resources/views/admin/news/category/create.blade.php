@@ -17,12 +17,15 @@
                                 <input
                                     id="title"
                                     type="text"
-                                    class="form-control"
+                                    class="form-control @error('title') is-invalid @enderror"
                                     name="title"
                                     value="{{ old('title') }}"
-                                    required
-                                    autofocus
                                 >
+                                @error('title')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="form-group">
@@ -30,11 +33,15 @@
                                 <input
                                     id="slug"
                                     type="text"
-                                    class="form-control"
+                                    class="form-control @error('slug') is-invalid @enderror"
                                     name="slug"
                                     value="{{ old('slug') }}"
-                                    required
                                 >
+                                @error('slug')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="form-group">
