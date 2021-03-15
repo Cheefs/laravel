@@ -65,7 +65,7 @@ class NewsController extends Controller
      * @param News $news
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(News $news, NewsRequest $request) {
+    public function update(NewsRequest $request, News $news) {
         $request->validated();
         $news->fill($request->all());
         $newImage = $this->saveImage($request);

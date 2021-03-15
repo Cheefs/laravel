@@ -27,7 +27,7 @@ class NewsRequest extends FormRequest
             'title' => ['required', 'min:4', 'max:20'],
             'text' => ['required', 'min:10'],
             'news_category_id' => "required|exists:{$tableNameCategory},id",
-            'is_private' =>'boolean',
+            'is_private' => 'boolean',
             'image' => 'mimes:jpeg,png,bmp|max:1000',
         ];
     }

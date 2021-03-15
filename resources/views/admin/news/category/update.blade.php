@@ -20,7 +20,7 @@
                                     type="text"
                                     class="form-control @error('title') is-invalid @enderror"
                                     name="title"
-                                    value="{{ $category->title }}"
+                                    value="{{ old('title') ?? $category->title }}"
                                 >
                                 @error('title')
                                     <span class="text-danger" role="alert">
@@ -36,7 +36,7 @@
                                     type="text"
                                     class="form-control @error('slug') is-invalid @enderror"
                                     name="slug"
-                                    value="{{ $category->slug }}"
+                                    value="{{ old('slug') ?? $category->slug }}"
                                 >
                                 @error('slug')
                                     <span class="text-danger" role="alert">

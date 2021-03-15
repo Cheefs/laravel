@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\NewsCategoryRequest;
 use App\Models\NewsCategory;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class NewsCategoryController extends Controller
@@ -57,11 +56,11 @@ class NewsCategoryController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param NewsCategory $category
      * @param NewsCategoryRequest $request
+     * @param NewsCategory $category
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(NewsCategory $category, NewsCategoryRequest $request) {
+    public function update(NewsCategoryRequest $request, NewsCategory $category) {
         $request->validated();
         $category->fill($request->all())->save();
         return redirect()->route('news.category.view', $category->id )->with('success', 'News category updated!');
