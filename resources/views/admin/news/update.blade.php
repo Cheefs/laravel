@@ -18,28 +18,38 @@
                                 <input
                                     id="title"
                                     type="text"
-                                    class="form-control"
+                                    class="form-control @error('title') is-invalid @enderror"
                                     name="title"
-                                    value="{{ $news->title }}"
-                                    autofocus
+                                    value="{{ old('title') ?? $news->title }}"
                                 >
+                                @error('title')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="news_category_id">{{ __('Category') }}</label>
                                 <select
                                     id="news_category_id"
-                                    class="form-control"
+                                    class="form-control @error('news_category_id') is-invalid @enderror"
                                     name="news_category_id"
                                 >
+
                                 @foreach($categoryList as $category)
-                                    <option @if( $news->news_category_id === $category->id) selected @endif
+                                    <option @if( in_array($category->id, [ (int)old('news_category_id'), $news->news_category_id ])) selected @endif
                                         value="{{ $category->id }}"
                                     >
                                         {{ $category->title }}
                                     </option>
                                     @endforeach
                                 </select>
+                                @error('news_category_id')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="form-group">
@@ -47,24 +57,34 @@
                                     <textarea
                                     id="Text"
                                     type="text"
-                                    class="form-control"
+                                    class="form-control @error('text') is-invalid @enderror"
                                     name="text"
-                                >{{ $news->text }}</textarea>
+                                >{{ old('text') ?? $news->text }}</textarea>
+                                @error('text')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="form-check">
                                 <input id="is_private"
-                                    @if( $news->is_private ) checked @endif
+                                    @if( old('is_private') ?? $news->is_private) checked @endif
                                     name="is_private"
                                     type="checkbox"
-                                    value="{{ $news->is_private }}"
+                                    value="{{ old('is_private') ?? $news->is_private }}"
                                     class="form-check-input"
                                 >
                                 <label for="is_private" >{{ __('Is Private') }}</label>
                             </div>
 
                             <div class="form-group">
-                                <input type="file" name="image">
+                                <input type="file" name="image" class="@error('image') is-invalid @enderror">
+                                @error('image')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="form-group">

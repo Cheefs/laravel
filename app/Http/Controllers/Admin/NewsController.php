@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NewsRequest;
 use App\Models\News;
 use App\Models\NewsCategory;
 use Illuminate\Http\Request;
@@ -33,11 +34,11 @@ class NewsController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
+     * @param NewsRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request) {
+    public function store(NewsRequest $request) {
+        $request->validated();
         $news = new News();
         $news->fill($request->all());
         $news->image = $this->saveImage($request);
@@ -60,11 +61,12 @@ class NewsController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param Request $request
+     * @param NewsRequest $request
      * @param News $news
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(News $news, Request $request) {
+    public function update(NewsRequest $request, News $news) {
+        $request->validated();
         $news->fill($request->all());
         $newImage = $this->saveImage($request);
         if ($newImage) {

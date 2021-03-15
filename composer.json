@@ -20,6 +20,7 @@
         "barryvdh/laravel-debugbar": "^3.5",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
+        "laravel/dusk": "^6.13",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
@@ -64,6 +65,11 @@
             "php artisan config:cache",
             "php artisan cache:clear",
             "php artisan storage:link"
+        ],
+        "dusk": [
+            "composer require --dev laravel/dusk",
+            "php artisan dusk:install",
+            "php artisan dusk:chrome-driver --detect"
         ]
     }
 }
