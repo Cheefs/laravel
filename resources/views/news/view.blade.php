@@ -12,7 +12,7 @@
                     <div class="card-header">{{ $news->title }}</div>
                     <div class="card-body">
                         @if($news)
-                            @guest
+                            @if($news->is_private && !Auth::user())
                                 <span class="text-danger">{{ __('Register to look') }}</span>
                             @else
                                 <div class="card-img" style="background-image: url({{ $news->image ?? asset('storage/default.jpg') }})"></div>
