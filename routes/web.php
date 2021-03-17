@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\IndexController as HomeController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\News\CategoryController;
@@ -32,15 +33,25 @@ Route::name('news.')->prefix('/news')->group(function () {
 });
 
 Route::name('admin.')
-    ->prefix('admin')
+    ->prefix('/admin')
+    ->middleware(['auth', 'is_admin'])
     ->group(function () {
         Route::get('/', [AdminIndexController::class, 'index'])->name('index');
-        Route::get('/test1', [AdminIndexController::class, 'test1'])->name('test1');
-        Route::get('/test2', [AdminIndexController::class, 'test2'])->name('test2');
+        Route::get('/users', [AdminIndexController::class, 'users'])->name('users');
+        Route::post('/set-admin', [AdminIndexController::class, 'setAdmin'])->name('set-admin');
 
         Route::resource('news', AdminNewsController::class)->except('show');
         Route::prefix('news')->name('news.')->group(function () {
             Route::resource('category', AdminNewsCategoryController::class)->except('show');
         });
     });
+
+Route::name('users.')
+    ->prefix('/users')
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+        Route::post('/profile', [ProfileController::class, 'save'])->name('profile.save');
+    });
+
 Auth::routes();

@@ -5,7 +5,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use PhpOffice\PhpSpreadsheet\Calculation\Category;
 
 /**
  * @property string $id
@@ -14,7 +13,7 @@ use PhpOffice\PhpSpreadsheet\Calculation\Category;
  * @property string $text
  * @property bool $is_private
  * @property int $news_category_id;
- * @property Category $category
+ * @property NewsCategory $category
  *
  **/
 class News extends Model
