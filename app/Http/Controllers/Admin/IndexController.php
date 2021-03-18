@@ -2,18 +2,35 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
 
 class IndexController extends Controller
 {
     public function index() {
-        return redirect()->route('admin.news.index');
+        return view('admin.index');
     }
-    public function test1() {
-        return view('admin.test1');
+    public function users() {
+        return view('admin.users.index')->with('users', User::paginate(10));
     }
 
-    public function test2() {
-        return view('admin.test2');
+    public function setAdmin(Request $request) {
+        $user = User::find($request->get('userId'));
+
+        if ($user->is_admin && $user->id === Auth::user()->id) {
+            return response()->json([
+                'error' => __('Cant remove Admin status from yourself!'),
+            ]);
+        }
+        $user->is_admin = !$user->is_admin;
+        $user->save();
+
+        return response()->json([
+            'status' => 'ok',
+            'is_admin' => $user->is_admin
+        ]);
     }
 }

@@ -63,7 +63,7 @@ class NewsCategoryController extends Controller
     public function update(NewsCategoryRequest $request, NewsCategory $category) {
         $request->validated();
         $category->fill($request->all())->save();
-        return redirect()->route('news.category.view', $category->id )->with('success', 'News category updated!');
+        return redirect()->route('news.category.view', $category->id)->with('success', 'News category updated!');
     }
 
     /**

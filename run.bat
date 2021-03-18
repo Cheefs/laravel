@@ -1,1 +1,1 @@
-docker-compose --env-file ./docker/.env -f ./docker/docker-compose.yaml up -d --build --force-recreate
+docker-compose -f ./docker/docker-compose.yaml --env-file .env  up -d --build --force-recreate

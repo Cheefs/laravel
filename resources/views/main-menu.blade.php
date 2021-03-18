@@ -1,13 +1,12 @@
 @php
     $links = [
         ['route' => 'home', 'name' => __('Home') ],
-        ['route' => 'admin.news.index', 'name' => __('Admin') ],
         ['route' => 'news.index', 'name' => __('News') ],
-        ['route' => 'news.category.index', 'name' => __('News Category`s') ],
+        ['route' => 'news.category.index', 'name' => __('News Category`s') ]
     ];
-
-    if(isset($current) && $current) {
-        $links[] = $current;
+    $user = Auth::user();
+    if( $user && $user->is_admin) {
+        $links[] = ['route' => 'admin.index', 'name' => __('Admin') ];
     }
 @endphp
 @include('layouts.menu', ['links' => $links])
