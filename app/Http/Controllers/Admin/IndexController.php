@@ -29,7 +29,8 @@ class IndexController extends Controller
         $user->save();
 
         return response()->json([
-            'status' => 'ok'
+            'status' => 'ok',
+            'is_admin' => $user->is_admin
         ]);
     }
 }

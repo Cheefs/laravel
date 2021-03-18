@@ -4,18 +4,25 @@ const $usersContainer = document.querySelector('#container__users');
 
 if ($usersContainer) {
     $usersContainer.addEventListener('click', (event) => {
-       const { target: { classList, dataset: { id, url } }  } = event;
-       if (classList.contains('js:toggleIsAdmin')) {
-           toggleIsAdmin(id, url)
-       }
+        event.preventDefault();
+        const { target } = event;
+        const { classList, dataset: { id, url } } = target;
+
+        if (classList.contains('js:toggleIsAdmin')) {
+            target.disabled = true;
+            toggleIsAdmin(id, url).then( async res => {
+                const data = await res.json();
+                target.checked = data.is_admin;
+                target.disabled = false;
+            })
+        }
     });
 }
 
 
 function toggleIsAdmin(userId, url) {
-    console.log({ userId, url })
     const token = document.querySelector('meta[name="csrf-token"]');
-    fetch(url,{
+    return fetch(url,{
         method: 'POST',
         headers: {
             'Content-type': 'application/json',
