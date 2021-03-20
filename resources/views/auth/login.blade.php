@@ -77,6 +77,10 @@
                                     {{ __('Login') }}
                                 </button>
 
+                                <a class="social-link" href="{{ route('githubLogin') }}">
+                                    <img src="{{ asset('storage/github.png')  }}" alt="social-icon">
+                                </a>
+
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}

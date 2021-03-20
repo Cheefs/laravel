@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
+use App\Http\Controllers\Admin\ParserController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\IndexController as HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
@@ -40,6 +42,9 @@ Route::name('admin.')
         Route::get('/users', [AdminIndexController::class, 'users'])->name('users');
         Route::post('/set-admin', [AdminIndexController::class, 'setAdmin'])->name('set-admin');
 
+        Route::get('/parser', [ParserController::class, 'create'])->name('parser.create');
+        Route::post('/parser', [ParserController::class, 'store'])->name('parser.store');
+
         Route::resource('news', AdminNewsController::class)->except('show');
         Route::prefix('news')->name('news.')->group(function () {
             Route::resource('category', AdminNewsCategoryController::class)->except('show');
@@ -53,5 +58,8 @@ Route::name('users.')
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
         Route::post('/profile', [ProfileController::class, 'save'])->name('profile.save');
     });
+
+Route::get('/auth/github', [LoginController::class, 'githubLogin'])->name('githubLogin');
+Route::get('/auth/github/response', [LoginController::class, 'githubResponse'])->name('githubResponse');
 
 Auth::routes();

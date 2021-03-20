@@ -15,7 +15,7 @@
                             @forelse( $news as $item )
                                 <li class="list-group-item">
                                 <h4>{{ $item->title }}</h4>
-                                <div class="card-img" style="background-image: url({{ $news->image ?? asset('storage/default.jpg') }})"></div>
+                                <div class="card-img" style="background-image: url({{ $item->image ?? asset('storage/default.jpg') }})"></div>
                                 @if($item->is_private && !Auth::user())
                                     <strong>{{ __('Is private news! You need register to view it') }}</strong>
                                 @else
