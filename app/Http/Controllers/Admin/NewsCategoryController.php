@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\NewsCategoryRequest;
 use App\Models\NewsCategory;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class NewsCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function index() {
         return view('admin.news.category.index', [
@@ -21,7 +25,7 @@ class NewsCategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      * @param NewsCategory $category
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function create(NewsCategory $category) {
         return view('admin.news.category.create', [
@@ -32,7 +36,7 @@ class NewsCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      * @param NewsCategoryRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(NewsCategoryRequest $request) {
         $request->validated();
@@ -45,7 +49,7 @@ class NewsCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      * @param NewsCategory $category
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function edit(NewsCategory $category) {
         return view('admin.news.category.update', [
@@ -58,7 +62,7 @@ class NewsCategoryController extends Controller
      * Update the specified resource in storage.
      * @param NewsCategoryRequest $request
      * @param NewsCategory $category
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function update(NewsCategoryRequest $request, NewsCategory $category) {
         $request->validated();
@@ -69,7 +73,7 @@ class NewsCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      * @param NewsCategory $category
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      * @throws \Exception
      */
     public function destroy(NewsCategory $category) {

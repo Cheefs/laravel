@@ -35,8 +35,8 @@ class NewsRequest extends FormRequest
     public function messages() {
         return [
             'required' =>  __('Field :attribute is required '),
-            'min' =>  __(':attribute to short'),
-            'max' =>  __(':attribute to long '),
+            'min' => __(':attribute to short'),
+            'max' => __(':attribute to long '),
             'exists' => __('Not found category :attribute'),
         ];
     }

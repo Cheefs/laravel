@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\NewsRequest;
 use App\Models\News;
 use App\Models\NewsCategory;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Storage;
@@ -14,7 +18,7 @@ class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function index() {
         return view('admin.news.index')->with('news', News::paginate(10));
@@ -23,7 +27,7 @@ class NewsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function create(News $news) {
         return view('admin.news.create', [
@@ -35,7 +39,7 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      * @param NewsRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(NewsRequest $request) {
         $request->validated();
@@ -50,7 +54,7 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      * @param News $news
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function edit(News $news) {
         return view('admin.news.update', [
@@ -63,7 +67,7 @@ class NewsController extends Controller
      * Update the specified resource in storage.
      * @param NewsRequest $request
      * @param News $news
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function update(NewsRequest $request, News $news) {
         $request->validated();
@@ -79,7 +83,7 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      * @param News $news
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      * @throws \Exception
      */
     public function destroy(News $news) {

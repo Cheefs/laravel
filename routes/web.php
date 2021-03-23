@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\Admin\ParserController;
+use App\Http\Controllers\Admin\ResourcesController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\IndexController as HomeController;
 use App\Http\Controllers\ProfileController;
@@ -49,6 +50,8 @@ Route::name('admin.')
         Route::prefix('news')->name('news.')->group(function () {
             Route::resource('category', AdminNewsCategoryController::class)->except('show');
         });
+
+        Route::resource('resources', ResourcesController::class)->except('show');
     });
 
 Route::name('users.')
