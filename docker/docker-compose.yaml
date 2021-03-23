@@ -48,6 +48,11 @@ services:
       SERVICE_NAME: mysql
     networks:
       - app-network
+  redis:
+    build:
+      context: ../
+      dockerfile: ./docker/redis/Dockerfile
+    container_name: redis
 
 #Docker Networks
 networks:

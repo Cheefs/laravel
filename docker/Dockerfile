@@ -2,9 +2,9 @@ FROM php:8.0-fpm
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends libssl-dev zlib1g-dev curl git unzip netcat libxml2-dev libpq-dev libzip-dev libpng-dev && \
-    pecl install apcu xdebug && \
+    pecl install apcu xdebug redis && \
     docker-php-ext-install mysqli pdo pdo_mysql tokenizer xml pcntl zip opcache intl gd && \
-    docker-php-ext-enable apcu pdo_mysql sodium xdebug && \
+    docker-php-ext-enable apcu pdo_mysql sodium xdebug redis && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 WORKDIR /var/www
