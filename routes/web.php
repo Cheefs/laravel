@@ -12,6 +12,7 @@ use App\Http\Controllers\News\CategoryController;
 use App\Http\Controllers\News\IndexController as NewsIndexController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\NewsCategoryController as AdminNewsCategoryController;
+use UniSharp\LaravelFilemanager\Lfm;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,5 +65,9 @@ Route::name('users.')
 
 Route::get('/auth/github', [LoginController::class, 'githubLogin'])->name('githubLogin');
 Route::get('/auth/github/response', [LoginController::class, 'githubResponse'])->name('githubResponse');
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'is_admin']], function () {
+    Lfm::routes();
+});
 
 Auth::routes();

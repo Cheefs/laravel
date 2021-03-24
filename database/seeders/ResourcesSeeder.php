@@ -13,7 +13,6 @@ class ResourcesSeeder extends Seeder
         ['name' => 'Mail ru', 'url' => 'https://news.mail.ru/rss'],
     ];
 
-
     /**
      * Run the database seeds.
      *

@@ -16,7 +16,7 @@
                                 <span class="text-danger">{{ __('Register to look') }}</span>
                             @else
                                 <div class="card-img" style="background-image: url({{ $news->image ?? asset('storage/default.jpg') }})"></div>
-                                <p>{{ $news->text }}</p>
+                                <p>{!! $news->text !!}</p>
 
                                 <strong>
                                     <a href="{{ $news->link }}">{{ __('Go to full news') }}</a>
