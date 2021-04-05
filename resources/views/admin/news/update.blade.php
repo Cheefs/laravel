@@ -53,9 +53,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="Text">{{ __('Text') }}</label>
+                                <label for="ckeditor4">{{ __('Text') }}</label>
                                     <textarea
-                                    id="Text"
+                                    id="ckeditor4"
                                     type="text"
                                     class="form-control @error('text') is-invalid @enderror"
                                     name="text"
@@ -98,4 +98,15 @@
             </div>
         </div>
     </div>
+
+    <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+    <script>
+        const options = {
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+        };
+        CKEDITOR.replace('ckeditor4', options);
+    </script>
 @endsection

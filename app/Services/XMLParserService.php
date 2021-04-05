@@ -1,15 +1,18 @@
 <?php
 
 
-namespace App\Models;
+namespace App\Services;
 
+use App\Models\News;
+use App\Models\NewsCategory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Orchestra\Parser\Xml\Facade as XmlParser;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
-class NewsParser
+class XMLParserService
 {
     protected Collection $allCategory;
     protected Collection $allNews;
@@ -19,28 +22,27 @@ class NewsParser
         $this->allNews = News::all();
     }
 
-    public function run(array $newsSources) {
-        foreach ($newsSources as $source) {
-            $xml = XmlParser::load($source);
-            $data = $xml->parse([
-                'title' => ['uses' => 'channel.title'],
-                'link' => ['uses' => 'channel.link'],
-                'description' => ['uses' => 'channel.description'],
-                'news' => ['uses' => 'channel.item[title,link,description,pubDate,enclosure::url,category]']
-            ]);
-            $this->saveSourceNews($data['news']);
-        }
+    public function run(string $url) {
+        $xml = XmlParser::load($url);
+        $data = $xml->parse([
+            'title' => ['uses' => 'channel.title'],
+            'link' => ['uses' => 'channel.link'],
+            'description' => ['uses' => 'channel.description'],
+            'news' => ['uses' => 'channel.item[title,link,description,pubDate,enclosure::url,category]']
+        ]);
+        $this->saveSourceNews($data['news'], $data);
+        Storage::disk('publicLogs')->append('log.txt', date('h:i:s') . " " . $url);
     }
 
-    function saveSourceNews($parsedNews) {
+    function saveSourceNews(array $parsedNews, array $data) {
         $preparedData = [];
         foreach ($parsedNews as $news) {
             if ($this->isNewsExist($news)) {
                 continue;
             }
-
+            $categoryName = $news['category'] ?? $data['title'];
             $category = $this->findOrCreateCategory(
-                Str::slug($news['category']), $news
+                Str::slug($categoryName), $news
             );
 
             $newNews = [
